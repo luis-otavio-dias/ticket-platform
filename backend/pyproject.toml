@@ -1,0 +1,91 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.1",
+    "django-stubs>=6.1.0",
+    "djangorestframework>=3.18.0",
+    "djangorestframework-stubs>=3.18.0",
+]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.13",
+  "django-stubs[compatible-mypy]>=5.1",
+  "djangorestframework-stubs[compatible-mypy]>=3.15",
+]
+
+[tool.ruff]
+line-length = 79
+target-version = "py314"
+fix = true
+show-fixes = true
+indent-width = 4
+exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "T201",
+  "COM812",
+  "INP001",
+  "D",
+  "ANN401",
+  "ERA001",
+  "A004",
+  "CPY001",
+  "DJ001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["ANN201", "S101"]
+"*/migrations/*.py" = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint.isort]
+known-first-party = ["core"]
+
+[tool.pyright]
+typeCheckingMode = "standard"
+pythonVersion = "3.14"
+include = ["."]
+exclude = [
+  "**/venv",
+  "**/.venv",
+  "**/env",
+  "**/.env",
+  "**/node_modules",
+  "**/__pycache__",
+  "**/migrations",
+]
+venv = ".venv"
+venvPath = "."
+
+[tool.mypy]
+python_version = "3.14"
+plugins = ["mypy_django_plugin.main"]
+exclude = ["migrations/"]
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.django-stubs]
+django_settings_module = "core.settings"
+
+[tool.pytest.ini_options]
+addopts = "-s --color=yes --tb=short"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
