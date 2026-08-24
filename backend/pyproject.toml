@@ -5,17 +5,24 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "dj-database-url>=3.1.2",
     "django>=6.1",
-    "django-stubs>=6.1.0",
     "djangorestframework>=3.18.0",
-    "djangorestframework-stubs>=3.18.0",
+    "dotenv>=0.9.9",
+    "psycopg2-binary>=2.9.12",
+    "uvicorn>=0.52.4",
+    "whitenoise>=6.12.0",
 ]
 
 [dependency-groups]
 dev = [
   "mypy>=1.13",
-  "django-stubs[compatible-mypy]>=5.1",
-  "djangorestframework-stubs[compatible-mypy]>=3.15",
+  "django-stubs>=6.1.0",
+  "djangorestframework-stubs>=3.18.0",
+  "pytest>=9.1.1",
+  "pytest-django>=4.14.0",
+  "pytest-dotenv>=0.5.2",
+  "ruff>=0.16.4",
 ]
 
 [tool.ruff]
@@ -43,6 +50,11 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["ANN201", "S101"]
 "*/migrations/*.py" = ["ALL"]
+"core/settings.py" = [
+    "E501", # Ignore line-length violations for long secret keys or database URLs
+]
+"**/views.py" = ["ARG002"]
+
 
 [tool.ruff.format]
 quote-style = "double"
@@ -80,8 +92,9 @@ django_settings_module = "core.settings"
 
 [tool.pytest.ini_options]
 addopts = "-s --color=yes --tb=short"
+DJANGO_SETTINGS_MODULE = "core.settings"
 testpaths = ["tests"]
-asyncio_mode = "auto"
+env_files = ".env"
 
 [build-system]
 requires = ["setuptools", "wheel"]

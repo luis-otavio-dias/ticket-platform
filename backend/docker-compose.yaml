@@ -1,0 +1,26 @@
+services:
+  ticket-site-backend:
+    image: ticket-site-backend
+    container_name: ticket-site-backend
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    develop:
+          watch:
+            - action: sync+restart
+              path: .
+              target: /app
+
+              ignore:
+                - .venv/
+                - __pycache__/
+
+            - action: rebuild
+              path: ./uv.lock
