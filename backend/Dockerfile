@@ -46,4 +46,9 @@ WORKDIR /app
 
 RUN python manage.py collectstatic --noinput
 
+COPY --chown=python:python scripts/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
 CMD ["uvicorn", "core.asgi:application", "--host", "0.0.0.0", "--port", "8000"]
