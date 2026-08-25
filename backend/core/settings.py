@@ -143,8 +143,12 @@ REST_FRAMEWORK: dict[str, str] = {
 }
 
 
-STATICFILES_DIRS: list[str] = [
-    str(Path(BASE_DIR / "static")),
-]
+STATICFILES_DIRS: list[str] = (
+    [
+        str(Path(BASE_DIR / "static")),
+    ]
+    if (BASE_DIR / "static").exists()
+    else []
+)
 
 STATIC_ROOT = str(Path(BASE_DIR / "staticfiles"))

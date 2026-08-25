@@ -95,6 +95,9 @@ addopts = "-s --color=yes --tb=short"
 DJANGO_SETTINGS_MODULE = "core.settings"
 testpaths = ["tests"]
 env_files = ".env"
+filterwarnings = [
+  "ignore:No directory at.*staticfiles:UserWarning",
+]
 
 [build-system]
 requires = ["setuptools", "wheel"]
