@@ -44,6 +44,9 @@ jobs:
       - name: Run mypy
         run: uv run mypy .
 
+      - name: Check for missing Django migrations
+        run: uv run python manage.py makemigrations --check --dry-run
+
   tests:
     runs-on: ubuntu-latest
     defaults:
