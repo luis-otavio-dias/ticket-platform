@@ -15,3 +15,5 @@ wheels/
 # Cache
 .cache/
 *_cache
+
+db.sqlite3
