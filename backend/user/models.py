@@ -89,6 +89,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS: ClassVar[list[str]] = []
 
     class Meta:
+        db_table = "auth_user"
         verbose_name = "User"
         verbose_name_plural = "Users"
 
