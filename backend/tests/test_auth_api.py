@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from user.models import User
 
 REGISTER_URL = "/api/auth/register/"
-PASSWORD = "S3cure-Passw0rd!"  # noqa: S105
+PASSWORD = "S3cure-Passw0rd!"
 
 
 @pytest.mark.django_db
@@ -27,7 +27,7 @@ def test_register_customer_sets_cookies_and_returns_user() -> None:
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["user"]["email"] == "customer@example.com"
     assert response.json()["user"]["role"] == "CUSTOMER"
-    # Tokens must travel only via cookies, never in the body.
+
     assert "access" not in response.json()
     assert "refresh" not in response.json()
 
@@ -165,7 +165,7 @@ def test_login_returns_user_and_sets_cookies() -> None:
     assert response.json()["user"]["email"] == "login@example.com"
     assert response.cookies["access_token"]["httponly"]
     assert response.cookies["refresh_token"]["httponly"]
-    # Tokens must travel only via cookies, never in the body.
+
     assert "access" not in response.json()
     assert "refresh" not in response.json()
 
@@ -259,7 +259,7 @@ def test_refresh_rotates_cookies() -> None:
     assert new_access
     assert new_refresh != old_refresh
 
-    # The old refresh token is blacklisted by rotation.
+
     replay = APIClient()
     replay.cookies["refresh_token"] = old_refresh
     assert replay.post(REFRESH_URL).status_code == HTTPStatus.UNAUTHORIZED
@@ -288,7 +288,7 @@ def test_logout_clears_cookies_and_blacklists_refresh() -> None:
     assert response.cookies["access_token"].value == ""
     assert response.cookies["refresh_token"].value == ""
 
-    # Old refresh token must now be rejected (blacklisted).
+
     fresh = APIClient()
     fresh.cookies["refresh_token"] = refresh
     assert fresh.post(REFRESH_URL).status_code == HTTPStatus.UNAUTHORIZED

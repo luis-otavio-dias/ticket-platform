@@ -50,7 +50,17 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["ANN201", "S101"]
+"tests/**/*.py" = [
+    "ANN001",
+    "ANN002",
+    "ANN003",
+    "ANN201",
+    "PLR2004",
+    "S101",
+    "S105",
+    "S106",
+    "SLF001",
+]
 "*/migrations/*.py" = ["ALL"]
 "core/settings.py" = [
     "E501", # Ignore line-length violations for long secret keys or database URLs
