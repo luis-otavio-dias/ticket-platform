@@ -24,4 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("health/", HealthCheckView.as_view()),
     path("api/auth/", include("user.urls")),
+    path("api/events/", include("event.urls")),
 ]

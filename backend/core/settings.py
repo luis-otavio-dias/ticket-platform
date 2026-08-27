@@ -51,6 +51,7 @@ INSTALLED_APPS: list[str] = [
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     "user",
+    "event",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -175,11 +176,9 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+CORS_ALLOWED_ORIGINS: list[str] = [
+    h.strip() for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if h.strip()
 ]
-
 
 STATICFILES_DIRS: list[str] = (
     [
@@ -192,3 +191,7 @@ STATICFILES_DIRS: list[str] = (
 STATIC_ROOT = str(Path(BASE_DIR / "staticfiles"))
 
 AUTH_USER_MODEL = "user.User"
+
+# TMDb API
+# Obtain a Read Access Token (v4 auth) at https://www.themoviedb.org/settings/api
+TMDB_API_TOKEN = os.getenv("TMDB_API_TOKEN", "")
