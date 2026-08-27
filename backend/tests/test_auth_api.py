@@ -259,7 +259,6 @@ def test_refresh_rotates_cookies() -> None:
     assert new_access
     assert new_refresh != old_refresh
 
-
     replay = APIClient()
     replay.cookies["refresh_token"] = old_refresh
     assert replay.post(REFRESH_URL).status_code == HTTPStatus.UNAUTHORIZED
@@ -287,7 +286,6 @@ def test_logout_clears_cookies_and_blacklists_refresh() -> None:
     assert response.status_code == HTTPStatus.OK
     assert response.cookies["access_token"].value == ""
     assert response.cookies["refresh_token"].value == ""
-
 
     fresh = APIClient()
     fresh.cookies["refresh_token"] = refresh

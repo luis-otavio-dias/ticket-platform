@@ -96,8 +96,6 @@ class CatalogMovieDetailView(APIView):
         return Response(data)
 
 
-
-
 class EventListCreateView(APIView):
     """GET /api/events/ — public list of PUBLISHED events.
     POST /api/events/ — organizer creates a new DRAFT event.
@@ -127,8 +125,6 @@ class EventListCreateView(APIView):
         )
 
 
-
-
 class EventDetailUpdateView(APIView):
     """GET /api/events/<pk>/ — public for PUBLISHED, organizer for own DRAFT.
     PATCH /api/events/<pk>/ — organizer partially updates own DRAFT event.
@@ -156,7 +152,6 @@ class EventDetailUpdateView(APIView):
             return Response(
                 {"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND
             )
-
 
         if not event.is_published:
             if not request.user.is_authenticated or (
@@ -200,7 +195,6 @@ class EventDetailUpdateView(APIView):
         serializer.save()
         event.refresh_from_db()
         return Response(EventDetailSerializer(event).data)
-
 
 
 class EventPublishView(APIView):
@@ -253,8 +247,6 @@ class EventCancelView(APIView):
         return Response(EventDetailSerializer(event).data)
 
 
-
-
 class EventStaffView(APIView):
     """POST /api/events/<pk>/staff/ — organizer adds a RECEPTIONIST.
     DELETE /api/events/<pk>/staff/<user_id>/ — organizer removes staff.
@@ -303,7 +295,6 @@ class EventStaffView(APIView):
 
         staff.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 
 class MyEventsView(APIView):

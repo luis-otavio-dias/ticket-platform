@@ -14,7 +14,6 @@ from user.models import User
 PASSWORD = "S3cure-Passw0rd!"
 
 
-
 def _make_user(email: str, role: str = User.Role.CUSTOMER) -> User:
     return User.objects.create_user(email=email, password=PASSWORD, role=role)
 
@@ -87,7 +86,6 @@ def _event_payload(**kwargs) -> dict:
 EVENTS_URL = "/api/events/"
 
 
-
 @pytest.mark.django_db
 def test_organizer_creates_event():
     org, client = _organizer_client()
@@ -145,8 +143,6 @@ def test_equal_start_end_returns_400():
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
-
-
 @pytest.mark.django_db
 def test_list_events_returns_only_published():
     org = _make_user("org@example.com", User.Role.ORGANIZER)
@@ -172,8 +168,6 @@ def test_list_events_is_public():
     response = client.get(EVENTS_URL)
 
     assert response.status_code == HTTPStatus.OK
-
-
 
 
 @pytest.mark.django_db
@@ -220,8 +214,6 @@ def test_organizer_cannot_see_other_organizer_draft():
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-
-
 @pytest.mark.django_db
 def test_organizer_updates_own_draft():
     org, client = _organizer_client()
@@ -264,8 +256,6 @@ def test_organizer_cannot_update_other_organizer_event():
     )
 
     assert response.status_code == HTTPStatus.NOT_FOUND
-
-
 
 
 @pytest.mark.django_db
@@ -397,7 +387,6 @@ def test_customer_cannot_add_staff():
     )
 
     assert response.status_code == HTTPStatus.FORBIDDEN
-
 
 
 @pytest.mark.django_db

@@ -177,7 +177,9 @@ SIMPLE_JWT = {
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS: list[str] = [
-    h.strip() for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if h.strip()
+    h.strip()
+    for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+    if h.strip()
 ]
 
 STATICFILES_DIRS: list[str] = (
