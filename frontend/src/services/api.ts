@@ -20,6 +20,8 @@ export interface RequestOptions extends Omit<RequestInit, 'body'> {
 }
 
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+
 let isRefreshing = false
 let refreshPromise: Promise<boolean> | null = null
 
@@ -31,7 +33,7 @@ async function performTokenRefresh(): Promise<boolean> {
   isRefreshing = true
   refreshPromise = (async () => {
     try {
-      const res = await fetch('/api/auth/refresh/', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/refresh/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,6 +54,8 @@ async function performTokenRefresh(): Promise<boolean> {
 
 export async function apiFetch<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { body, headers, skipAuthRefresh, ...customConfig } = options
+
+  const fullUrl = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`
 
   const requestHeaders: HeadersInit = {
     'Content-Type': 'application/json',
@@ -77,7 +81,7 @@ export async function apiFetch<T>(endpoint: string, options: RequestOptions = {}
     }
   }
 
-  let response = await fetch(endpoint, config)
+  let response = await fetch(fullUrl, config)
 
   if (
     response.status === 401 &&
@@ -87,7 +91,7 @@ export async function apiFetch<T>(endpoint: string, options: RequestOptions = {}
   ) {
     const refreshed = await performTokenRefresh()
     if (refreshed) {
-      response = await fetch(endpoint, config)
+      response = await fetch(fullUrl, config)
     }
   }
 
