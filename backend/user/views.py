@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 class RegisterView(CreateAPIView[User]):
     serializer_class = RegisterSerializer
-    permission_classes = [AllowAny]  # noqa: RUF012
+    permission_classes = (AllowAny,)
 
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
@@ -92,7 +92,7 @@ class RefreshView(TokenRefreshView):
 
 
 class LogoutView(APIView):
-    permission_classes = [AllowAny]  # noqa: RUF012
+    permission_classes = (AllowAny,)
 
     def post(self, request: Request) -> Response:
         raw_refresh = get_refresh_token(request)

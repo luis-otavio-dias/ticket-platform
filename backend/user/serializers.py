@@ -10,8 +10,8 @@ from user.models import User as UserModel
 class UserSerializer(serializers.ModelSerializer[UserModel]):
     class Meta:
         model = UserModel
-        fields = ["id", "email", "name", "role"]  # noqa: RUF012
-        read_only_fields = ["id", "email", "role"]  # noqa: RUF012
+        fields = ("id", "email", "name", "role")
+        read_only_fields = ("id", "email", "role")
 
 
 class RegisterSerializer(serializers.ModelSerializer[UserModel]):
@@ -19,8 +19,8 @@ class RegisterSerializer(serializers.ModelSerializer[UserModel]):
 
     class Meta:
         model = UserModel
-        fields = ["id", "email", "name", "password", "role"]  # noqa: RUF012
-        read_only_fields = ["id"]  # noqa: RUF012
+        fields = ("id", "email", "name", "password", "role")
+        read_only_fields = ("id",)
 
     def validate_password(self, value: str) -> str:
         candidate = get_user_model()(
