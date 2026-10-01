@@ -1,0 +1,21 @@
+# OS & System
+.DS_Store
+Thumbs.db
+
+# Environment & Local Secrets
+.env
+.env.local
+*.local
+
+# AI Agents, Tools & Skills (Local Workflows)
+.agent/
+.agents/
+.claude/
+.opencode/
+.impeccable/
+skills-lock.json
+stitch/
+
+# Temporary & Scratch Dirs
+scratch/
+tmp/
